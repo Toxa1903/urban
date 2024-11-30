@@ -1,0 +1,30 @@
+def is_prime(func):
+    def wrapper(*args, **kwargs):
+        for arg in args:
+            if not isinstance(arg, (int, float)):
+                raise ValueError("Все аргументы должны быть числами.")
+            if arg < 0:
+                raise ValueError("Все аргументы должны быть положительными числами.")
+
+        result = func(*args, **kwargs)
+
+        if result < 2:
+            print("Составное")
+        else:
+            for i in range(2, int(result ** 0.5) + 1):
+                if result % i == 0:
+                    print("Составное")
+                    break
+            else:
+                print("Простое")
+
+        return result
+
+    return wrapper
+
+@is_prime
+def sum_three(a, b, c):
+    return a + b + c
+
+result = sum_three(2, 3, 6)
+print(result)
